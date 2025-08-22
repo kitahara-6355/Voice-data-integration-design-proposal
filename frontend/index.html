@@ -93,6 +93,12 @@
           <span class="card-distance">(類似度スコア: ${distance})</span>
         </div>
         <div class="card-text">${documentText}</div>
+        <div class="card-player">
+          <audio controls preload="none" style="width: 100%; margin-top: 10px;">
+            <source src="/api/audio/${encodeURIComponent(source)}" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
       `;
       resultsContainer.appendChild(card);
     });

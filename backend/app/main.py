@@ -8,6 +8,7 @@ import logging
 # Absolute imports from the project root
 from backend.app import api_ingest
 from backend.app import api_search
+from backend.app import api_audio
 from backend.app.services import transcribe, embed_index
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -43,6 +44,7 @@ app.add_middleware(
 # API Routers
 app.include_router(api_ingest.router, prefix="/api/ingest", tags=["ingest"])
 app.include_router(api_search.router, prefix="/api/search", tags=["search"])
+app.include_router(api_audio.router, prefix="/api/audio", tags=["audio"])
 
 
 # Health check endpoint
