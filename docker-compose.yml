@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      # Map host port 8000 to container port 8000
+      - "8000:8000"
+    volumes:
+      # Mount the local Hugging Face cache into the container.
+      # This avoids re-downloading models on every build and shares the cache.
+      # The target path /root/.cache/huggingface is the default cache location for the root user in the container.
+      - ./hf_cache:/root/.cache/huggingface
+
+      # Mount the local vector database into the container for persistence.
+      # The target path /code/chroma_db corresponds to the path calculated in embed_index.py
+      - ./chroma_db:/code/chroma_db
+
+      # Optional: Mount the storage directory if you want to add files locally
+      # and have them appear in the container without rebuilding the image.
+      # - ./storage/processed:/code/storage/processed
+    environment:
+      # Tell huggingface_hub and other libraries to use the mounted cache volume.
+      - HF_HOME=/root/.cache/huggingface
+      - SENTENCE_TRANSFORMERS_HOME=/root/.cache/huggingface
+    # Add a healthcheck to ensure the service is running before it's marked as "up"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 180s # Give it 3 minutes to load the models
