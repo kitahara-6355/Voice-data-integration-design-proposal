@@ -1,0 +1,14 @@
+fastapi
+uvicorn[standard]
+python-multipart
+# For whisper, choose one of the following. openai-whisper is the standard one.
+# openai-whisper
+# For faster CPU/GPU inference, consider faster-whisper
+faster-whisper
+sentence-transformers
+chromadb
+pydantic
+python-dotenv
+# The user is on Windows, so ffmpeg needs to be installed manually.
+# We can use ffmpeg-python if we want to manage it via pip, but manual install is often easier on Windows.
+# ffmpeg-python
