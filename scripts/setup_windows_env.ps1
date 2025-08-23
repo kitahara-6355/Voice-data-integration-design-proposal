@@ -26,11 +26,12 @@ pip install -U pip
 pip install -r backend/requirements.txt
 
 Write-Output "Checking ffmpeg availability..."
-$ff = & ffmpeg -version 2>&1
-if ($LASTEXITCODE -ne 0) {
-  Write-Output "ffmpeg is not detected. Please install ffmpeg and add to PATH. See https://ffmpeg.org/download.html"
-} else {
-  Write-Output "ffmpeg found: $($ff -split \"`n\")[0]"
+try {
+    $ff = & ffmpeg -version 2>&1
+    $firstLine = $ff | Select-Object -First 1
+    Write-Output "ffmpeg found: $firstLine"
+} catch {
+    Write-Output "ffmpeg is not detected. Please install ffmpeg and add to PATH. See https://ffmpeg.org/download.html"
 }
 
 Write-Output "Setup finished. To run locally: .\run_local.ps1"
