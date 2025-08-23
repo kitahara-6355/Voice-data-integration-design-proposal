@@ -76,15 +76,18 @@ python scripts/download_models.py
 ```
 
 ### 4. サーバーの起動
-以下のコマンドでバックエンドサーバーを起動します。
+以下のPowerShellスクリプトを実行することで、バックエンドサーバーがバックグラウンドで起動します。
 
 ```powershell
-# uvicornを直接実行
-uvicorn backend.app.main:app --host 0.0.0.0 --port 8000 --loop asyncio
+.\run_local.ps1
 ```
+`uvicorn_stdout.log` と `uvicorn_stderr.log` に実行ログが出力されます。
 
 ### 5. 動作確認
 ブラウザで `http://localhost:8000` にアクセスします。
+
+### 6. サーバーの停止
+この方法で起動したサーバーはバックグラウンドで動作し続けます。停止するには、Windowsの**タスクマネージャー**を開き、「プロセス」タブから `python.exe` または `uvicorn` のプロセスを探して手動で終了してください。
 
 ---
 
