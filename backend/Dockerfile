@@ -19,7 +19,8 @@ COPY requirements.txt .
 
 # Install any needed packages specified in requirements.txt
 # Use --no-cache-dir to reduce image size
-RUN pip install --no-cache-dir -r requirements.txt
+# Set a long timeout to prevent issues with large packages on slow networks
+RUN pip install --no-cache-dir --timeout=600 -r requirements.txt
 
 # Copy the rest of the application's code into the container
 COPY ./app ./app
